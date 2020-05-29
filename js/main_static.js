@@ -13,14 +13,7 @@ let svg = d3
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 //Read the data
-let promises = [
-  d3.csv("data/dfPovertyAdultLit.csv"),
-  d3.csv("data/dfPovertyMobileOwn.csv"),
-  d3.csv("data/dfPovertyLaborForcePart.csv"),
-  d3.csv("data/dfPovertyEmplAg.csv"),
-  d3.csv("data/dfPovertyEmplIndustry.csv"),
-  d3.csv("data/dfPovertyEmplSvc.csv"),
-];
+let promises = [d3.csv("data/dfPovertyAdultLit.csv")];
 let allData = [];
 
 Promise.all(promises).then(function (data) {
@@ -37,40 +30,6 @@ Promise.all(promises).then(function (data) {
           "Adult literacy, 25 or more years old (% of population aged 25 or more)"
         ] = +d[
           "Adult literacy, 25 or more years old (% of population aged 25 or more)"
-        ];
-      } else if (
-        d.hasOwnProperty("Households' mobile phone ownership (% of population)")
-      ) {
-        d["Households' mobile phone ownership (% of population)"] = +d[
-          "Households' mobile phone ownership (% of population)"
-        ];
-      } else if (
-        d.hasOwnProperty(
-          "Labor force participation rate (% of working age population, 15-64 years old)"
-        )
-      ) {
-        d[
-          "Labor force participation rate (% of working age population, 15-64 years old)"
-        ] = +d[
-          "Labor force participation rate (% of working age population, 15-64 years old)"
-        ];
-      } else if (
-        d.hasOwnProperty("Employment services (% of total employment)")
-      ) {
-        d["Employment services (% of total employment)"] = +d[
-          "Employment services (% of total employment)"
-        ];
-      } else if (
-        d.hasOwnProperty("Employment in industry (% of total employment)")
-      ) {
-        d["Employment in industry (% of total employment)"] = +d[
-          "Employment in industry (% of total employment)"
-        ];
-      } else if (
-        d.hasOwnProperty("Employment in agriculture (% of total employment)")
-      ) {
-        d["Employment in agriculture (% of total employment)"] = +d[
-          "Employment in agriculture (% of total employment)"
         ];
       }
     });
@@ -119,11 +78,10 @@ function updateChart(someData) {
     .attr("transform", "rotate(-90)")
     .attr("y", -40)
     .attr("x", 0 - height / 2)
-    // .attr("dy", "1em")
     .style("text-anchor", "middle")
     .text("Poverty Rate");
 
-  // Color scale: give me a province name, I return a color
+  // Color scale: input a province name, output a color
   let color = d3
     .scaleOrdinal()
     .domain([
